@@ -1,0 +1,79 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<h2>Students Details</h2>
+<!-- Form to Add or Update Student -->
+<div class="form-row">
+  <label>
+    Name:
+    <input type="text" [(ngModel)]="newStudent.name" placeholder="Enter name" />
+  </label>
+  <label>
+    Address:
+    <input type="text" [(ngModel)]="newStudent.address" placeholder="Enter address" />
+  </label>
+  <label>
+    Marks:
+    <input type="number" [(ngModel)]="newStudent.marks" placeholder="Enter marks" />
+  </label>
+</div>
+
+<div class="form-description">
+  <label>
+    Description:
+    <input type="text" [(ngModel)]="newStudent.view" placeholder="Enter view" />
+  </label>
+</div>
+
+<button *ngIf="isEditing; else addBtn" (click)="updateStudent()">Update</button>
+<ng-template #addBtn>
+  <button class="add" (click)="addStudent()">Add New Student</button>
+</ng-template>
+
+<!-- Students Table -->
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Marks</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of filteredStudents; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ student.name }}</td>
+      <td>{{ student.address }}</td>
+      <td>{{ student.marks }}</td>
+      <td>
+        <button class="view" (click)="viewStudent(student)">
+          <i class="fas fa-eye"></i> <!-- Eye icon for view -->
+        </button>
+        <button class="edit" (click)="editStudent(student)">
+          <i class="fas fa-edit"></i> <!-- Edit icon -->
+        </button>
+        <button class="delete" (click)="deleteStudent(student._id)">
+          <i class="fas fa-trash"></i> <!-- Trash icon for delete -->
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Modal or Section to Display Student Details -->
+<div *ngIf="selectedStudent" class="modal">
+  <h3>Student Details</h3>
+  <p><strong>Name:</strong> {{ selectedStudent.name }}</p>
+  <p><strong>Address:</strong> {{ selectedStudent.address }}</p>
+  <p><strong>Marks:</strong> {{ selectedStudent.marks }}</p>
+  <p><strong>Description:</strong> {{ selectedStudent.view }}</p>
+  <button (click)="closeView()">Close</button>
+</div>
+
+<!-- Search Field -->
+<div class="search-container">
+  <input type="text" [(ngModel)]="searchText" placeholder="Search by name, address, or marks" />
+  <button (click)="searchStudent()">Search</button>
+</div>
+
+
+
